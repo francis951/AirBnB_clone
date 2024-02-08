@@ -15,12 +15,16 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = self.created_at
         else:
-            time = "%Y-%m-%dT%H:%M:%S.%f"
+            time_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
-                if key in ["created_at", "updated_at"]:
-                    self.__dict__[key]  = datetime.strptime(value, time)
+                if key == "__class__":
+                    # Use globals() to get the class type by name
+                    class_name = value
+                    self.__class__ = globals()[class_name]
+                elif key in ["created_at", "updated_at"]:
+                    setattr(self, key, datetime.strptime(value, time_format))
                 else:
-                    self.__dict__[key] = value
+                    setattr(self, key, value)
 
     def __str__(self):
         """
@@ -36,7 +40,7 @@ class BaseModel:
 
     def save(self):
         """updates the public instance updated_at with the current datetime"""
-        updated_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
