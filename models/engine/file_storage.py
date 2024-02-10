@@ -3,6 +3,7 @@
 import os.path
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -33,16 +34,21 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
-        if not os.path.exists(FileStorage.__file_path):
-            return  # No need to reload if the file doesn't exist
-            try:
-                with open(FileStorage.__file_path, "r") as file:
-                    loaded_objs = json.load(file)
-                    for key, obj_dict in loaded_objs.items():
-                        class_name, obj_id = key.split(".")
-                        obj_cls = eval(class_name)
-                        obj = obj_cls(**obj_dict)
-                        self.__objects[key] = obj
-            except FileNotFoundError as e:
-                print("Error loading JSON:", e)
-                pass
+        try:
+            with open(FileStorage.__file_path, "r", encodeing="utf-8") as file:
+                read_file = file.read()
+        except Exception:
+            return
+        the_obj = eval(read_file)
+        for key, value in the_obj.items():
+            the_obj[key] = eval(key.split(".")[0] + "(**value)")
+        self.the_obj = the_obj
+
+    def delete(self, obj):
+        """Deletes obj from __objects"""
+        try:
+            key = obj.__class__.__name__ + "." + str(obj.id)
+            del self.__objects[key]
+            return True
+        except Exception:
+            return False
