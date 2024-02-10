@@ -10,4 +10,4 @@ class State(BaseModel):
     def __init__(self, *args, **kwargs):
         """Creates new instances of State.
         """
-        super().__init__(*args, **kwargs)i
+        super().__init__(*args, **kwargs)
