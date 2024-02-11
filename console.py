@@ -38,14 +38,14 @@ class HBNBCommand(cmd.Cmd):
         if not self.class_verification(args):
             return
 
-        inst = eval(args[0] + '()')
+        inst = eval(args[0] + "()")
         if not isinstance(inst, BaseModel):
             return
         inst.save()
         print(inst.id)
 
     def do_show(self, inp):
-        """Prints the string representation of an instance based on the class name and id."""
+        """Prints the string representation of an instance."""
         args = inp.split()
         if not self.class_verification(args) or not self.id_verification(args):
             return
@@ -65,20 +65,26 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, inp):
-        """Prints all string representation of all instances based on the class name."""
+        """Prints all string representation of all instances."""
         args = inp.split()
         all_objects = models.storage.all()
         if not args:
             print([str(value) for value in all_objects.values()])
         elif args[0] in self.classes_list:
-            print([str(value) for key, value in all_objects.items() if args[0] in key])
+            print(
+                [str(value) for key, value in all_objects.items() if args[0] in key]
+            )
         else:
             print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instance based on the class name and id."""
         args = shlex.split(line)
-        if not self.class_verification(args) or not self.id_verification(args) or not self.attribute_verification(args):
+        if (
+            not self.class_verification(args)
+            or not self.id_verification(args)
+            or not self.attribute_verification(args)
+        ):
             return
 
         string_key = f"{args[0]}.{args[1]}"
@@ -89,33 +95,39 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, arg):
         """Hook before the command is run."""
-        if '.' in arg and '(' in arg and ')' in arg:
-            parts = arg.split('.',   1)[1].split('(',   1)
-            if len(parts) ==   2:
+        if "." in arg and "(" in arg and ")" in arg:
+            parts = arg.split(".", 1)[1].split("(", 1)
+            if len(parts) == 2:
                 cls, command_args = parts
-                if '(' in command_args:
-                    command, args = command_args.split('(',   1)
+                if "(" in command_args:
+                    command, args = command_args.split("(", 1)
                     if cls in self.classes_list and command in self.commands_list:
                         arg = f"{command} {cls} {args.rstrip(')')}"
         return arg
 
     def do_count(self, class_name):
         """Retrieve the number of instances of a class."""
-        count = sum(1 for key in models.storage.all() if key.startswith(class_name + '.'))
+        count = sum(
+            1 for key in models.storage.all()
+            if key.startswith(class_name + ".")
+        )
         print(count)
 
     @staticmethod
     def class_verification(args):
         """Verifies class and checks if it is in the class list."""
         if not args or args[0] not in HBNBCommand.classes_list:
-            print("** class doesn't exist **" if args else "** class name missing **")
+            print(
+                "** class doesn't exist **"
+                if args else "** class name missing **"
+            )
             return False
         return True
 
     @staticmethod
     def id_verification(args):
         """Verifies id of class."""
-        if len(args) <  2:
+        if len(args) < 2:
             print("** instance id missing **")
             return False
         return True
@@ -123,12 +135,15 @@ class HBNBCommand(cmd.Cmd):
     @staticmethod
     def attribute_verification(args):
         """Verifies attributes."""
-        if len(args) <  3:
-            print("** attribute name missing **" if len(args) <  3 else "** value missing **")
+        if len(args) < 3:
+            print(
+                "** attribute name missing **"
+                if len(args) < 3
+                else "** value missing **"
+            )
             return False
         return True
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()

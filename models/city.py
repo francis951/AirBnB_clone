@@ -4,7 +4,8 @@ from models.base_model import BaseModel
 
 
 class City(BaseModel):
-    """Class that defines properties of City """
+    """Class that defines properties of City"""
+
     state_id = ""
     name = ""
 

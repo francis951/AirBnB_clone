@@ -47,7 +47,9 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test if save method is working correctly after update."""
         self.BaseModel1.save()
-        self.assertNotEqual(self.BaseModel1.created_at, self.BaseModel1.updated_at)
+        self.assertNotEqual(
+            self.BaseModel1.created_at, self.BaseModel1.updated_at
+        )
 
     def test_functions(self):
         """Test if BaseModel moudule is documented."""
@@ -72,8 +74,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(
             my_model_json["created_at"], self.BaseModel1.created_at.isoformat()
         )
-        self.assertEqual(datetime.datetime, type(self.BaseModel1.created_at))
-        self.assertEqual(my_model_json["__class__"], self.BaseModel1.__class__.__name__)
+        self.assertEqual(
+            datetime.datetime, type(self.BaseModel1.created_at)
+        )
+        self.assertEqual(
+            my_model_json["__class__"], self.BaseModel1.__class__.__name__
+        )
         self.assertEqual(my_model_json["id"], self.BaseModel1.id)
 
     def test_unique_id(self):
@@ -101,55 +107,3 @@ class TestBaseModel(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
-# #!/usr/bin/python3
-# import unittest
-# from datetime import datetime
-# from models.base_model import BaseModel
-
-# class TestBaseModel(unittest.TestCase):
-
-#     def setUp(self):
-#         self.base_model = BaseModel()
-
-#     def test_attributes(self):
-#         self.assertTrue(hasattr(self.base_model, 'id'))
-#         self.assertTrue(hasattr(self.base_model, 'created_at'))
-#         self.assertTrue(hasattr(self.base_model, 'updated_at'))
-
-#     def test_str_method(self):
-#         expected_output = f"[BaseModel]({self.base_model.id}){self.base_model.__dict__}"
-#         self.assertEqual(str(self.base_model), expected_output)
-
-#     def test_save_method(self):
-#         initial_updated_at = self.base_model.updated_at
-#         self.base_model.save()
-#         self.assertNotEqual(self.base_model.updated_at, initial_updated_at)
-#         self.assertLess(initial_updated_at, self.base_model.updated_at)
-
-#     def test_to_dict_method(self):
-#         expected_dict = {
-#             'id': self.base_model.id,
-#             'created_at': self.base_model.created_at.isoformat(),
-#             'updated_at': self.base_model.updated_at.isoformat(),
-#             '__class__': 'BaseModel'
-#         }
-#         self.assertDictEqual(self.base_model.to_dict(), expected_dict)
-
-#     def test_init_with_kwargs(self):
-#         obj_dict = {
-#             'id': 'test_id',
-#             'created_at': '2023-01-01T00:00:00.000',
-#             'updated_at': '2023-01-02T00:00:00.000',
-#             '__class__': 'BaseModel',
-#             'custom_attr': 'test'
-#         }
-#         new_obj = BaseModel(**obj_dict)
-#         self.assertEqual(new_obj.id, 'test_id')
-#         self.assertEqual(new_obj.created_at, datetime(2023, 1, 1))
-#         self.assertEqual(new_obj.updated_at, datetime(2023, 1, 2))
-#         self.assertEqual(new_obj.custom_attr, 'test')
-
-# if __name__ == '__main__':
-#     unittest.main()
