@@ -66,12 +66,8 @@ class TestReview(unittest.TestCase):
         self.assertEqual(
             my_model_json["created_at"], self.review1.created_at.isoformat()
         )
-        self.assertEqual(
-            datetime.datetime, type(self.review1.created_at)
-        )
-        self.assertEqual(
-            my_model_json["__class__"], self.review1.__class__.__name__
-        )
+        self.assertEqual(datetime.datetime, type(self.review1.created_at))
+        self.assertEqual(my_model_json["__class__"], self.review1.__class__.__name__)
         self.assertEqual(my_model_json["id"], self.review1.id)
 
     def test_unique_id(self):

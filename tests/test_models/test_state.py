@@ -63,9 +63,7 @@ class TestState(unittest.TestCase):
             my_model_json["created_at"], self.state1.created_at.isoformat()
         )
         self.assertEqual(datetime.datetime, type(self.state1.created_at))
-        self.assertEqual(
-            my_model_json["__class__"], self.state1.__class__.__name__
-        )
+        self.assertEqual(my_model_json["__class__"], self.state1.__class__.__name__)
         self.assertEqual(my_model_json["id"], self.state1.id)
 
     def test_unique_id(self):

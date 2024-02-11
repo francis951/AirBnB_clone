@@ -64,9 +64,7 @@ class TestAmenity(unittest.TestCase):
             my_model_json["created_at"], self.amenity1.created_at.isoformat()
         )
         self.assertEqual(datetime.datetime, type(self.amenity1.created_at))
-        self.assertEqual(
-            my_model_json["__class__"], self.amenity1.__class__.__name__
-        )
+        self.assertEqual(my_model_json["__class__"], self.amenity1.__class__.__name__)
         self.assertEqual(my_model_json["id"], self.amenity1.id)
 
     def test_unique_id(self):
