@@ -65,13 +65,9 @@ class TestUser(unittest.TestCase):
         """Test if to_dict method is working correctly."""
         my_model_json = self.user1.to_dict()
         self.assertEqual(str, type(my_model_json["created_at"]))
-        self.assertEqual(
-            my_model_json["created_at"], self.user1.created_at.isoformat()
-        )
+        self.assertEqual(my_model_json["created_at"], self.user1.created_at.isoformat())
         self.assertEqual(datetime.datetime, type(self.user1.created_at))
-        self.assertEqual(
-            my_model_json["__class__"], self.user1.__class__.__name__
-        )
+        self.assertEqual(my_model_json["__class__"], self.user1.__class__.__name__)
         self.assertEqual(my_model_json["id"], self.user1.id)
 
     def test_unique_id(self):

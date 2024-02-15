@@ -47,9 +47,7 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """Test if save method is working correctly after update."""
         self.BaseModel1.save()
-        self.assertNotEqual(
-            self.BaseModel1.created_at, self.BaseModel1.updated_at
-        )
+        self.assertNotEqual(self.BaseModel1.created_at, self.BaseModel1.updated_at)
 
     def test_functions(self):
         """Test if BaseModel moudule is documented."""
@@ -74,12 +72,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(
             my_model_json["created_at"], self.BaseModel1.created_at.isoformat()
         )
-        self.assertEqual(
-            datetime.datetime, type(self.BaseModel1.created_at)
-        )
-        self.assertEqual(
-            my_model_json["__class__"], self.BaseModel1.__class__.__name__
-        )
+        self.assertEqual(datetime.datetime, type(self.BaseModel1.created_at))
+        self.assertEqual(my_model_json["__class__"], self.BaseModel1.__class__.__name__)
         self.assertEqual(my_model_json["id"], self.BaseModel1.id)
 
     def test_unique_id(self):
